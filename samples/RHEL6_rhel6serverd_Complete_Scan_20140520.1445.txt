@@ -1,0 +1,268 @@
+RedHat 6 STIG Supplemental Script V 1.0.2
+DISA STIG V1R2 - Released on: 5/8/2014
+Server: rhel6serverd
+Scan Time: 14:45 2014.05.20
+
+Total items checked: 254
+Number of compliant items: 116
+Number of non-compliant items: 138
+Percent Compliant: 45%
+Percent Compliant by CAT: I (64%) - II (53%) - III (31%)
+
+Non-Compliant Checks (138):
+1-C1-38476: To ensure the system can cryptographically verify base software packages come from Red Hat (and to connect to the Red Hat Network to receive them if desired), the Red Hat GPG key must properly be installed. To ensure the GPG key is installed, run: rhn_register
+1-C1-38497: If an account is configured for password authentication but does not have an assigned password, it may be possible to log into the account without authentication. Remove any instances of the "nullok" option in "/etc/pam.d/system-auth-ac" to prevent logins with empty passwords.
+1-C1-38614: To explicitly disallow remote login from accounts with empty passwords, add or correct the following line in "/etc/ssh/sshd_config": PermitEmptyPasswords no Any accounts with empty passwords should be disabled immediately, and PAM configuration should prevent users from being able to assign themselves empty passwords.
+1-C1-38653: Edit "/etc/snmp/snmpd.conf", remove default community string "public". Upon doing that, restart the SNMP service: 'service snmpd restart'.
+1-C1-38666: No path specified. A virus scan program was not found on the system..
+1-C1-38668: Configure the system to log a message instead of rebooting the system by altering the "shutdown" line in "/etc/init/control-alt-delete.conf" to read as follows: exec /usr/bin/logger -p security.info "Ctrl-Alt-Delete pressed"
+1-C2-38439: Implement an automated system for managing user accounts that minimizes the risk of errors, either intentional or deliberate. If possible, this system should integrate with an existing enterprise user management system, such as, one based Active Directory or Kerberos.
+1-C2-38444: :INPUT value in /etc/sysconfig/ip6tables is incorrectly configured.
+1-C2-38446: No email address for root found in /etc/aliases.
+1-C2-38455: The "/tmp" directory is a world-writable directory used for temporary file storage. Ensure it has its own partition or logical volume at installation time, or migrate it using LVM.
+1-C2-38464: The "auditd" service can be configured to take an action when disk space starts to run low. Edit the file "/etc/audit/auditd.conf". Modify the following line, substituting [ACTION] appropriately: 'disk_full_action = [ACTION]' Possible values for [ACTION] are described in the "auditd.conf" man page. These include: "ignore" "syslog" "exec" "suspend" "single" "halt" Set this to "syslog", "exec", "single", or "halt".
+1-C2-38468: The "auditd" service can be configured to take an action when disk space starts to run low. Edit the file "/etc/audit/auditd.conf". Modify the following line, substituting [ACTION] appropriately: 'disk_full_action = [ACTION]' Possible values for [ACTION] are described in the "auditd.conf" man page. These include: "ignore" "syslog" "exec" "suspend" "single" "halt" Set this to "syslog", "exec", "single", or "halt".
+1-C2-38470: The "auditd" service can be configured to take an action when disk space starts to run low. Edit the file "/etc/audit/auditd.conf". Modify the following line, substituting [ACTION] appropriately. Set this to "email" (instead of the default, which is "suspend") as it is more likely to get prompt attention. V38446 ensures that the email generated through the operation "space_left_action" will be sent to an administrator.
+1-C2-38475: To specify password length requirements for new accounts, edit the file "/etc/login.defs" and add or correct the following lines: "PASS_MIN_LEN 14" The DoD requirement is "14". If a program consults "/etc/login.defs" and also another PAM module (such as "pam_cracklib") during a password change operation, then the most restrictive must be satisfied.
+1-C2-38477: To specify password minimum age for new accounts, edit the file "/etc/login.defs" and add or correct the following line, replacing [DAYS] appropriately: PASS_MIN_DAYS [DAYS] A value of 1 day is considered sufficient for many environments. The DoD requirement is 1.
+1-C2-38479: To specify password maximum age for new accounts, edit the file /etc/login.defs and add or correct the following line, replacing [DAYS] appropriately: PASS_MAX_DAYS [DAYS] The DoD requirement is 60.
+1-C2-38484: Update the "PrintLastLog" keyword to "yes" in /etc/ssh/sshd_config: 'PrintLastLog yes' While it is acceptable to remove the keyword entirely since the default action for the SSH daemon is to print the last login date and time, it is preferred to have the value explicitly documented.
+1-C2-38486: Implement a process whereby OS data is backed up from the system in accordance with local policies.
+1-C2-38488: Implement a process whereby user data is backed up from the system in accordance with local policies.
+1-C2-38489: AIDE is not installed.
+1-C2-38492: To restrict root logins through the (deprecated) virtual console devices, ensure lines of this form do not appear in "/etc/securetty": vc/1 vc/2 vc/3 vc/4 Note: Virtual console entries are not limited to those listed above. Any lines starting with "vc/" followed by numerals should be removed. (vc/1 vc/2 vc/3 vc/4 vc/5 vc/6 vc/7 vc/8 vc/9 vc/10 vc/11 )
+1-C2-38501: fail_interval is incorrectly configured.
+1-C2-38513: :INPUT value in /etc/sysconfig/iptables is incorrectly configure.
+1-C2-38519: The group-owner of all log files written by "rsyslog" should be root. These log files are determined by the second part of each Rule line in "/etc/rsyslog.conf" and typically all appear in "/var/log". For each log file [LOGFILE] referenced in "/etc/rsyslog.conf", run the following command to inspect the file's group owner: 'ls -l [LOGFILE]' If the owner is not "root", run the following command to correct this: chgrp root [LOGFILE] (2 items found.)
+1-C2-38520: A remote Log Server has not been defined in /etc/rsyslog.conf
+1-C2-38521: A remote Log Server has not been defined in /etc/rsyslog.conf
+1-C2-38523: The "sysctl net.ipv4.conf.all.accept_source_route" kernel parameter is properly running in sysctl but was not found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.all.accept_source_route = 0' is setup properly in "/etc/sysctl.conf".
+1-C2-38524: The "sysctl net.ipv4.conf.all.accept_redirects" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.all.accept_redirects = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C2-38526: The "sysctl net.ipv4.conf.all.secure_redirects" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.all.secure_redirects = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C2-38532: The "sysctl net.ipv4.conf.default.secure_redirects" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.default.secure_redirects = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C2-38542: The "sysctl net.ipv4.conf.all.rp_filter" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.all.rp_filter = 1' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C2-38548: The "net.ipv6.conf.default.accept_redirects" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv6.conf.default.accept_redirects = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C2-38549: ip6tables is not needed for the project and is running and enabled for runlevels: 3 4 5 .
+1-C2-38551: ip6tables is not needed for the project and is running and enabled for runlevels: 3 4 5 .
+1-C2-38553: ip6tables is not needed for the project and is running and enabled for runlevels: 3 4 5 .
+1-C2-38573: deny=3 value incorrect or missing from pam_faillock line in "/etc/pam.d/system-auth-ac".
+1-C2-38580: Add the following to "/etc/audit/audit.rules" in order to capture kernel module loading and unloading events: '-w /sbin/insmod -p x -k modules' '-w /sbin/rmmod -p x -k modules' '-w /sbin/modprobe -p x -k modules' '-a always,exit -F arch=64 -S init_module -S delete_module -k modules'
+1-C2-38583: File permissions for the target of the symlink "/etc/grub.conf" should be set to 600, at most. To properly set the permissions of "/etc/grub.conf", run the command: 'chmod 0600 $(readlink -f /etc/grub.conf)'
+1-C2-38585: The grub boot loader should have password protection enabled to protect boot-time settings. To do so, select a password and then generate a hash from it by running the following command: "grub-crypt --sha-512". When prompted to enter a password, insert the following line into "/etc/grub.conf" immediately after the header comments. (Use the output from "grub-crypt" as the value of [password-hash]): "password --encrypted [password-hash]"
+1-C2-38586: Single-user mode is intended as a system recovery method, providing a single user root access to the system by providing a boot option at startup. By default, no authentication is performed if single-user mode is selected. To require entry of the root password even if the system is started in single-user mode, add or correct the following line in the file "/etc/sysconfig/init": SINGLE=/sbin/sulogin
+1-C2-38588: To disable the ability for users to perform interactive startups, edit the file "/etc/sysconfig/init". Add or correct the line: PROMPT=no The "PROMPT" option allows the console user to perform an interactive system startup, in which it is possible to select the set of services which are started on boot. 
+1-C2-38592: unlock_time value incorrect or missing from pam_faillock line in "/etc/pam.d/system-auth-ac".
+1-C2-38593: To configure the system login banner: Edit "/etc/issue". Replace the default text with a message compliant with the local site policy or a legal disclaimer. The DoD required can be found in the manual STIG under V38593.
+1-C2-38595: To enable smart card authentication, consult the documentation at: https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Managing_Smart_Cards/enabling-smart-card-login.html.
+1-C2-38596: The "kernel.randomize_va_space" kernel parameter is properly running in sysctl but was not found in "/etc/sysctl.conf". Ensure 'kernel.randomize_va_space = 2' is setup properly in "/etc/sysctl.conf".
+1-C2-38597: The "kernel.exec-shield" kernel parameter is properly running in sysctl but was not found in "/etc/sysctl.conf". Ensure 'kernel.exec-shield = 1' is setup properly in "/etc/sysctl.conf".
+1-C2-38600: The "net.ipv4.conf.default.send_redirects" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.default.send_redirects = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C2-38601: The "net.ipv4.conf.all.send_redirects" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.all.send_redirects = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C2-38611: SSH can emulate the behavior of the obsolete rsh command in allowing users to enable insecure access to their accounts via ".rhosts" files. To ensure this behavior is disabled, add or correct the following line in "/etc/ssh/sshd_config": IgnoreRhosts yes 
+1-C2-38612: SSH's cryptographic host-based authentication is more secure than ".rhosts" authentication, since hosts are cryptographically authenticated. However, it is not recommended that hosts unilaterally trust one another, even within an organization. To disable host-based authentication, add or correct the following line in "/etc/ssh/sshd_config": HostbasedAuthentication no
+1-C2-38613: The root user should never be allowed to log in to a system directly over a network. To disable root login via SSH, add or correct the following line in "/etc/ssh/sshd_config": PermitRootLogin no
+1-C2-38615: To enable the warning banner and ensure it is consistent across the system, add or correct the following line in "/etc/ssh/sshd_config": Banner /etc/issue Another section contains information on how to create an appropriate system-wide warning banner.
+1-C2-38617: Limit the ciphers to those algorithms which are FIPS-approved. Counter (CTR) mode is also preferred over cipher-block chaining (CBC) mode. The following line in "/etc/ssh/sshd_config" demonstrates use of FIPS-approved ciphers: Ciphers aes128-ctr,aes192-ctr,aes256-ctr,aes128-cbc,3des-cbc,aes192-cbc,aes256-cbc The man page "sshd_config(5)" contains a list of supported ciphers. (0 unapproved ciphers found.)
+1-C2-38623: The file permissions for all log files written by rsyslog should be set to 600, or more restrictive. These log files are determined by the second part of each Rule line in "/etc/rsyslog.conf" and typically all appear in "/var/log". For each log file [LOGFILE] referenced in "/etc/rsyslog.conf", run the following command to inspect the file's permissions: 'ls -l [LOGFILE]' If the permissions are not 600 or more restrictive, run the following command to correct this: 'chmod 0600 [LOGFILE]' (1 items found.)
+1-C2-38629: Run the following command to set the idle time-out value for inactivity in the GNOME desktop to 15 minutes: 'gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type int --set /apps/gnome-screensaver/idle_delay 15'
+1-C2-38630: Run the following command to activate the screensaver in the GNOME desktop after a period of inactivity: 'gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type bool --set /apps/gnome-screensaver/idle_activation_enabled true'
+1-C2-38638: Run the following command to activate locking of the screensaver in the GNOME desktop when it is activated: 'gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type bool --set /apps/gnome-screensaver/lock_enabled true'
+1-C2-38658: Do not allow users to reuse recent passwords. This can be accomplished by using the "remember" option for the "pam_unix" PAM module. In the file "/etc/pam.d/system-auth", append "remember=24" to the line which refers to the "pam_unix.so" module, as shown: password sufficient pam_unix.so [existing_options] remember=24 The DoD requirement is 24 passwords.
+1-C2-38660: Configuration options are not properly set in "etc/snmp/snmpd.conf".
+1-C2-38667: Install an additional intrusion detection tool to provide complementary or duplicative monitoring, reporting, and reaction capabilities to those of the base platform. For DoD systems, the McAfee Host-based Security System is provided to fulfill this role.
+1-C2-38670: AIDE is not installed.
+1-C2-38673: AIDE is not installed.
+1-C2-38678: The "auditd" service can be configured to take an action when disk space starts to run low. Edit the file "/etc/audit/auditd.conf". Modify the following line, substituting [ACTION] appropriately: "space_left = [num_megabytes]" The "num_megabytes" value specified is '200'.
+1-C2-38686: :FORWARD value in /etc/sysconfig/iptables is incorrectly configure.
+1-C2-38688: The GConf2.x86_64 package (the dependency for GDM that installs gconftool-2) is installed, but the "banner_message_enable" schema is not properly configured.
+1-C2-38689: The GConf2.x86_64 package (the dependency for GDM that installs gconftool-2) is installed, but the login banner is not properly configured.
+1-C2-38691: bluetooth is running and enabled for runlevels: 3 4 5 .
+1-C2-38695: AIDE is not installed.
+1-C2-38696: AIDE is not installed.
+1-C2-38698: AIDE is not installed.
+1-C2-38700: AIDE is not installed.
+1-C3-38437: autofs is running and enabled for runlevels: 3 4 5 .
+1-C3-38438: To ensure all processes can be audited, even those which start prior to the audit daemon, add the argument "audit=1" to the kernel line in "/etc/grub.conf", in the manner below: 'kernel /vmlinuz-version ro vga=ext root=/dev/VolGroup00/LogVol00 rhgb quiet audit=1'
+1-C3-38453: The RPM package management system can restore group-ownership of the package files and directories. The following command will update files and directories with group-ownership different from what is expected by the RPM database: 'rpm -qf [file or directory name]' 'rpm --setugids [package]' (/var/log/gdm )
+1-C3-38456: The "/var" directory is used by daemons and other system services to store frequently-changing data. Ensure that "/var" has its own partition or logical volume at installation time, or migrate it using LVM.
+1-C3-38463: System logs are stored in the "/var/log" directory. Ensure that it has its own partition or logical volume at installation time, or migrate it using LVM.
+1-C3-38467: Audit logs are stored in the "/var/log/audit" directory. Ensure that it has its own partition or logical volume at installation time, or migrate it later using LVM. Make absolutely certain that it is large enough to store all audit logs that will be created by the auditing daemon.
+1-C3-38471: The value 'active = yes' is either missing or improperly configured in "/etc/audisp/plugins.d/syslog.conf". Fix and restart the auditd process.
+1-C3-38474: The GConf2.x86_64 package (the dependency for GDM that installs gconftool-2) is installed, but the keyboard sequence to unlock the screen is not set to <Control><Alt>l
+1-C3-38482: The pam_cracklib module's "dcredit" parameter controls requirements for usage of digits in a password. When set to a negative number, any password will be required to contain that many digits. When set to a positive number, pam_cracklib will grant +1 additional length credit for each digit. Add "dcredit=-1" after pam_cracklib.so to require use of a digit in passwords.
+1-C3-38522: settimeofday is not listed in the Audit output and not listed in the audit.rules file. Add the following to "/etc/audit/audit.rules": # settimeofday '-a always,exit -F arch=b64 -S settimeofday -k audit_time_rules' then restart the audit service.
+1-C3-38525: stime is not listed in the Audit output and not listed in the audit.rules file. Add the following to "/etc/audit/audit.rules": # stime '-a always,exit -F arch=b32 -S stime -k time audit_time_rules' then restart the audit service.
+1-C3-38527: clock_settime is not listed in the Audit output and not listed in the audit.rules file. Add the following to "/etc/audit/audit.rules": # clock_settime '-a always,exit -F arch=b64 -S clock_settime -k audit_time_rules' then restart the audit service.
+1-C3-38528: The "sysctl net.ipv4.conf.all.log_martians" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.all.log_martians = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C3-38530: "/etc/localtime" is not listed in the Audit output and not listed in the audit.rules file. Add the following to "/etc/audit/audit.rules": '-w /etc/localtime -p wa -k audit_time_rules' then restart the audit service.
+1-C3-38531: Add the following to "/etc/audit/audit.rules", in order to capture events that modify account changes: '# audit_account_changes' '-w /etc/group -p wa -k audit_account_changes' '-w /etc/passwd -p wa -k audit_account_changes' '-w /etc/gshadow -p wa -k audit_account_changes' '-w /etc/shadow -p wa -k audit_account_changes' '-w /etc/security/opasswd -p wa -k audit_account_changes' (5 items found)
+1-C3-38533: The "sysctl net.ipv4.conf.default.accept_redirects" kernel parameter is not running in sysctl or properly found in "/etc/sysctl.conf". Ensure 'net.ipv4.conf.default.accept_redirects = 0' is setup properly in "/etc/sysctl.conf" then issue 'sysctl -p' to reload sysctl settings.
+1-C3-38534: Add the following to "/etc/audit/audit.rules", in order to capture events that modify account changes: '# audit_account_changes' '-w /etc/group -p wa -k audit_account_changes' '-w /etc/passwd -p wa -k audit_account_changes' '-w /etc/gshadow -p wa -k audit_account_changes' '-w /etc/shadow -p wa -k audit_account_changes' '-w /etc/security/opasswd -p wa -k audit_account_changes' (0 items found)
+1-C3-38535: The "sysctl net.ipv4.icmp_echo_ignore_broadcasts" kernel parameter is properly running in sysctl but was not found in "/etc/sysctl.conf". Ensure 'net.ipv4.icmp_echo_ignore_broadcasts = 1' is setup properly in "/etc/sysctl.conf".
+1-C3-38536: Add the following to "/etc/audit/audit.rules", in order to capture events that modify account changes: '# audit_account_changes' '-w /etc/group -p wa -k audit_account_changes' '-w /etc/passwd -p wa -k audit_account_changes' '-w /etc/gshadow -p wa -k audit_account_changes' '-w /etc/shadow -p wa -k audit_account_changes' '-w /etc/security/opasswd -p wa -k audit_account_changes' (0 items found)
+1-C3-38537: The "sysctl net.ipv4.icmp_ignore_bogus_error_responses" kernel parameter is properly running in sysctl but was not found in "/etc/sysctl.conf". Ensure 'net.ipv4.icmp_ignore_bogus_error_responses = 1' is setup properly in "/etc/sysctl.conf".
+1-C3-38538: Add the following to "/etc/audit/audit.rules", in order to capture events that modify account changes: '# audit_account_changes' '-w /etc/group -p wa -k audit_account_changes' '-w /etc/passwd -p wa -k audit_account_changes' '-w /etc/gshadow -p wa -k audit_account_changes' '-w /etc/shadow -p wa -k audit_account_changes' '-w /etc/security/opasswd -p wa -k audit_account_changes' (0 items found)
+1-C3-38540: Add the following to "/etc/audit/audit.rules": '# audit_network_modifications' '-a exit,always -F arch=b64 -S sethostname -S setdomainname -k audit_network_modifications' '-w /etc/issue -p wa -k audit_network_modifications' '-w /etc/issue.net -p wa -k audit_network_modifications' '-w /etc/hosts -p wa -k audit_network_modifications' '-w /etc/sysconfig/network -p wa -k audit_network_modifications' (0 items found)
+1-C3-38541: Add the following to "/etc/audit/audit.rules": '-w /etc/selinux/ -p wa -k MAC-policy'
+1-C3-38543: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S chmod -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S chmod -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S chmod -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S chmod -F auid=0 -k perm_mod'
+1-C3-38545: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S chown -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S chown -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S chown -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S chown -F auid=0 -k perm_mod'
+1-C3-38547: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S fchmod -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S fchmod -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S fchmod -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S fchmod -F auid=0 -k perm_mod'
+1-C3-38550: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S fchmodat -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S fchmodat -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S fchmodat -F auid=0 -k perm_mod'
+1-C3-38552: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S fchown -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S fchown -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S fchown -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S fchown -F auid=0 -k perm_mod'
+1-C3-38554: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S fchownat -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S fchownat -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S fchownat -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S fchownat -F auid=0 -k perm_mod'
+1-C3-38556: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S fremovexattr -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S fremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S fremovexattr -F auid=0 -k perm_mod'
+1-C3-38557: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S fsetxattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S fsetxattr -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S fsetxattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S fsetxattr -F auid=0 -k perm_mod'
+1-C3-38558: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S lchown -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S lchown -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S lchown -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S lchown -F auid=0 -k perm_mod'
+1-C3-38559: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S lremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S lremovexattr -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S lremovexattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S lremovexattr -F auid=0 -k perm_mod'
+1-C3-38561: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S lsetxattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S lsetxattr -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S lsetxattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S lsetxattr -F auid=0 -k perm_mod'
+1-C3-38563: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S removexattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S removexattr -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S removexattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S removexattr -F auid=0 -k perm_mod'
+1-C3-38565: Neither the x32 or x64 arch entries were found in the 'auditctl -l' output. Add the following lines to the file: '-a always,exit -F arch=b32 -S setxattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b32 -S setxattr -F auid=0 -k perm_mod' '-a always,exit -F arch=b64 -S setxattr -F auid>=500 -F auid!=4294967295 -k perm_mod' '-a always,exit -F arch=b64 -S setxattr -F auid=0 -k perm_mod'
+1-C3-38566: At a minimum, the audit system should collect unauthorized file accesses for all users and root. Add the following to "/etc/audit/audit.rules": '-a always,exit -F arch=64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid>=500 -F auid!=4294967295 -k access' '-a always,exit -F arch=64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid>=500 -F auid!=4294967295 -k access' '-a always,exit -F arch=64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EACCES -F auid=0 -k access' '-a always,exit -F arch=64 -S creat -S open -S openat -S truncate -S ftruncate -F exit=-EPERM -F auid=0 -k access'
+1-C3-38567: At a minimum, the audit system should collect the execution of privileged commands for all users and root. To find the relevant setuid programs: 'find / -xdev -type f -perm -4000 -o -perm -2000 2>/dev/null' Then, for each setuid program on the system, add a line of the following form to "/etc/audit/audit.rules", where [SETUID_PROG_PATH] is the full path to each setuid program in the list: '-a always,exit -F path=[SETUID_PROG_PATH] -F perm=x -F auid>=500 -F auid!=4294967295 -k privileged' (44 items found.)
+1-C3-38568: At a minimum, the audit system should collect media exportation events for all users and root. Add the following to "/etc/audit/audit.rules", setting ARCH to either b32 or b64 as appropriate for your system: '-a always,exit -F arch=64 -S mount -F auid>=500 -F auid!=4294967295 -k export' '-a always,exit -F arch=64 -S mount -F auid=0 -k export'
+1-C3-38569: The pam_cracklib module's "ucredit=" parameter controls requirements for usage of uppercase letters in a password. When set to a negative number, any password will be required to contain that many uppercase characters. When set to a positive number, pam_cracklib will grant +1 additional length credit for each uppercase character. Add "ucredit=-1" after pam_cracklib.so to require use of an uppercase character in passwords.
+1-C3-38570: The pam_cracklib module's "ocredit=" parameter controls requirements for usage of special (or ``other\'\') characters in a password. When set to a negative number, any password will be required to contain that many special characters. When set to a positive number, pam_cracklib will grant +1 additional length credit for each special character. Add "ocredit=-1" after pam_cracklib.so to require use of a special character in passwords.
+1-C3-38571: The pam_cracklib module's "lcredit=" parameter controls requirements for usage of lowercase letters in a password. When set to a negative number, any password will be required to contain that many lowercase characters. When set to a positive number, pam_cracklib will grant +1 additional length credit for each lowercase character. Add "lcredit=-1" after pam_cracklib.so to require use of a lowercase character in passwords.
+1-C3-38572: The pam_cracklib module's "difok" parameter controls requirements for usage of different characters during a password change. Add "difok=[NUM]" after pam_cracklib.so to require differing characters when changing passwords, substituting [NUM] appropriately. The DoD requirement is 4.
+1-C3-38575: At a minimum, the audit system should collect file deletion events for all users and root. Add the following to "/etc/audit/audit.rules": '-a always,exit -F arch=64 -S unlink -S unlinkat -S rename -S renameat -F auid>=500 -F auid!=4294967295 -k delete' '-a always,exit -F arch=64 -S unlink -S unlinkat -S rename -S renameat -F auid=0 -k delete'
+1-C3-38578: At a minimum, the audit system should collect administrator actions for all users and root. Add the following to "/etc/audit/audit.rules": '-w /etc/sudoers -p wa -k actions'
+1-C3-38590: To enable console screen locking when in text mode, install the "screen" package: 'yum install screen'.
+1-C3-38608: SSH allows administrators to set an idle timeout interval. After this interval has passed, the idle user will be automatically logged out. To set an idle timeout interval, edit the following line in "/etc/ssh/sshd_config" as follows: ClientAliveInterval [interval] The timeout [interval] is given in seconds. To have a timeout of 15 minutes, set [interval] to 900. If a shorter timeout has already been set for the login shell, that value will preempt any SSH setting made here. Keep in mind that some processes may stop SSH from correctly detecting that the user is idle.
+1-C3-38610: To ensure the SSH idle timeout occurs precisely when the "ClientAliveCountMax" is set, edit "/etc/ssh/sshd_config" as follows: ClientAliveCountMax 0
+1-C3-38616: To ensure users are not able to present environment options to the SSH daemon, add or correct the following line in "/etc/ssh/sshd_config": PermitUserEnvironment no
+1-C3-38635: adjtimex is not listed in the Audit output and not listed in the audit.rules file. Add the following to "/etc/audit/audit.rules": # adjtimex '-a always,exit -F arch=b64 -S adjtimex -k audit_time_rules' then restart the audit service.
+1-C3-38639: Run the following command to set the screensaver mode in the GNOME desktop to a blank screen: 'gconftool-2 --direct --config-source xml:readwrite:/etc/gconf/gconf.xml.mandatory --type string --set /apps/gnome-screensaver/mode blank-only'
+1-C3-38640: abrtd is running and enabled for runlevels: 3 5 .
+1-C3-38641: atd is running and enabled for runlevels: 3 4 5 .
+1-C3-38647: To ensure the default umask controlled by "/etc/profile" is set properly, add or correct the "umask" setting in "/etc/profile" to read as follows: umask 077
+1-C3-38649: To ensure the default umask for users of the C shell is set properly, add or correct the "umask" setting in "/etc/csh.cshrc" to read as follows: umask 077
+1-C3-38651: To ensure the default umask for users of the Bash shell is set properly, add or correct the "umask" setting in "/etc/bashrc" to read as follows: umask 077
+1-C3-38656: To require samba clients running "smbclient" to use packet signing, add the following to the "[global]" section of the Samba configuration file in "/etc/samba/smb.conf": client signing = mandatory Requiring samba clients such as "smbclient" to use packet signing ensures they can only communicate with servers that support packet signing.
+1-C3-38659: Excluding "/boot", 2 mount points are not encrypted. LUKS encryption is required on this system, but is not in use. Refer to https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-LUKS_Disk_Encryption.html for configuration options.
+1-C3-38661: Excluding "/boot", 2 mount points are not encrypted. LUKS encryption is required on this system, but is not in use. Refer to https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-LUKS_Disk_Encryption.html for configuration options.
+1-C3-38662: Excluding "/boot", 2 mount points are not encrypted. LUKS encryption is required on this system, but is not in use. Refer to https://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Security_Guide/sect-Security_Guide-LUKS_Disk_Encryption.html for configuration options.
+1-C3-38675: To disable core dumps for all users, add the following line to "/etc/security/limits.conf": * hard core 0
+1-C3-38684: Limiting the number of allowed users and sessions per user can limit risks related to denial of service attacks. This addresses concurrent sessions for a single account and does not address concurrent sessions by a single user via multiple accounts. To set the number of concurrent sessions per user add the following line in "/etc/security/limits.conf": '* hard maxlogins 10' A documented site-defined number may be substituted for 10 in the above.
+1-C3-38685: Account expiration missing from the following UIDs above 500: normaluser 
+1-C3-38690: Account expiration missing from the following UIDs above 500: normaluser 
+1-C3-38692: To specify the number of days after a password expires (which signifies inactivity) until an account is permanently disabled, add or correct the following lines in "/etc/default/useradd", substituting "[NUM_DAYS]" appropriately: 'INACTIVE=[NUM_DAYS]' A value of 35 is recommended. If a password is currently on the verge of expiration, then 35 days remain until the account is automatically disabled. However, if the password will not expire for another 60 days, then 95 days could elapse until the account would be automatically disabled. See the "useradd" man page for more information. Determining the inactivity timeout must be done with careful consideration of the length of a "normal" period of inactivity for users in the particular environment. Setting the timeout too low incurs support costs and also has the potential to impact availability of the system to legitimate users.
+1-C3-38693: The pam_cracklib module's "maxrepeat" parameter controls requirements for consecutive repeating characters. Edit the "/etc/pam.d/system-auth" file to include the following line prior to the "password include system-auth-ac" line: password required pam_cracklib.so maxrepeat=3
+1-C3-38694: INACTIVE value in /etc/default/useradd is incorrectly set to '-1'.
+
+Compliant Checks (116):
+0-C1-38462: The "nosignature" option was not found in any of the STIG required files.
+0-C1-38491: No .rhosts files were found in the STIG mentioned directories.
+0-C1-38587: The telnet-server package was not found on the system
+0-C1-38589: telnet service is not installed.
+0-C1-38591: The rsh-server package was not found on the system
+0-C1-38594: rsh service is not installed.
+0-C1-38598: rexec service is not installed.
+0-C1-38602: rlogin service is not installed.
+0-C1-38607: 'Protocol 2' is configured properly in "/etc/ssh/sshd_config".
+0-C1-38677: The "insecure_locks" value was not found in "/etc/security/limits.conf".
+0-C1-38701: The TFTP package is not installed, so the files mentioned in STIG fix text are not available.
+0-C2-38443: The "/etc/gshadow" is properly owned by "root".
+0-C2-38445: Group-ownership already properly set for the audit log files.
+0-C2-38448: The group-owner for "/etc/gshadow" is properly set to "root".
+0-C2-38449: The permissions for "/etc/gshadow" are properly set to 0000.
+0-C2-38450: The owner for "/etc/passwd" is properly set to "root".
+0-C2-38451: The group-owner for "/etc/passwd" is properly set to "root".
+0-C2-38457: The permissions for "/etc/passwd" are properly set to 0644
+0-C2-38458: The owner for "/etc/group" is properly set to "root".
+0-C2-38459: The group-owner for "/etc/group" is properly set to "root".
+0-C2-38461: The permissions for "/etc/group" are properly set to 0644.
+0-C2-38465: The System-wide shared library files located in the STIG mentioned directories are not group-writable or world-writable.
+0-C2-38466: The System-wide shared library files located in the STIG mentioned directories are owned by "root".
+0-C2-38469: System executables located in the STIG mentioned directories currently have the correct permissions.
+0-C2-38472: System executables located in the STIG mentioned directories currently have the correct ownership.
+0-C2-38481: No pending updates.
+0-C2-38483: The "gpgcheck" option is properly configured to '1'.
+0-C2-38485: No .hushlogin files exist on the system.
+0-C2-38490: The 'usb-storage' value is properly configured in "/etc/modprobe.d" files.
+0-C2-38495: Ownership already properly set for the audit log files.
+0-C2-38496: No accounts below UID 500, other than root, has a password configured "/etc/shadow".
+0-C2-38498: Permissions already properly set to 0640 or less for the audit log files.
+0-C2-38499: The "/etc/passwd" file does not appear to contain any password hashes.
+0-C2-38500: No account other than root has a UID of 0.
+0-C2-38502: "/etc/shadow" is properly owned by "root".
+0-C2-38503: The group owner of "/etc/shadow" is properly set to "root".
+0-C2-38504: The permissions for "/etc/shadow" is properly set to 0.
+0-C2-38511: The "net.ipv4.ip_forward" kernel parameter is properly running in sysctl and was properly found in "/etc/sysctl.conf".
+0-C2-38512: iptables is required for the project and is running.
+0-C2-38514: The Datagram Congestion Control Protocol (DCCP) is disabled.
+0-C2-38515: The Stream Control Transmission Protocol (SCTP) is disabled.
+0-C2-38517: Tipc kernel module is not loaded.
+0-C2-38518: The "root" account is the listed owner for all of the log files written by "rsyslog".
+0-C2-38529: The "sysctl net.ipv4.conf.default.accept_source_route" kernel parameter is properly running in sysctl and was properly found in "/etc/sysctl.conf".
+0-C2-38539: The "sysctl net.ipv4.tcp_syncookies" kernel parameter is properly running in sysctl and was properly found in "/etc/sysctl.conf".
+0-C2-38544: The "sysctl net.ipv4.conf.default.rp_filter" kernel parameter is properly running in sysctl and was properly found in "/etc/sysctl.conf".
+0-C2-38546: 'options ipv6 disable=1' was found in a file under "/etc/modprobe.d".
+0-C2-38555: iptables is required for the project and is running.
+0-C2-38560: iptables is required for the project and is running.
+0-C2-38574: sha512 value properly configured for pam_unix in /etc/pam.d/system-auth
+0-C2-38576: sha512 value properly configured in /etc/login.defs
+0-C2-38577: sha512 value properly configured in /etc/libuser.conf
+0-C2-38579: The "/etc/grub.conf" is properly owned by "root".
+0-C2-38581: The "/etc/grub.conf" is properly group-owned by "root".
+0-C2-38582: xinetd service is not installed.
+0-C2-38599: The vsftpd package is not installed, so the files mentioned in STIG fix text are not available.
+0-C2-38603: The ypserv package was not found on the system
+0-C2-38604: ypbind is not running and chkconfig is disabled.
+0-C2-38605: crond is running and chkconfig is turned on.
+0-C2-38606: The tftp-server package was not found on the system
+0-C2-38609: tftp service is not installed.
+0-C2-38619: No ".netrc" files were found in any of the user's home directories.
+0-C2-38620: ntpd is running and chkconfig is turned on.
+0-C2-38621: 4 Addresses found in /etc/ntp.conf
+0-C2-38622: Localhost was found in /etc/postfix/main.cf
+0-C2-38625: LDAP is not used for authentication or account information.
+0-C2-38626: LDAP is not used for authentication or account information
+0-C2-38628: auditd is running and chkconfig is turned on.
+0-C2-38631: auditd is running and chkconfig is turned on.
+0-C2-38632: auditd is running and chkconfig is turned on.
+0-C2-38633: The "max_log_file" setting in "/etc/audit/auditd.conf" is set to '6'.
+0-C2-38634: The "max_log_file_action" setting in "/etc/audit/auditd.conf" is set to 'rotate'.
+0-C2-38636: The "num_logs" setting in "/etc/audit/auditd.conf" is set to '5'.
+0-C2-38637: Hashes for installed software packages match what is expected in the RPM package management system.
+0-C2-38643: Glocal (other) write access was not found configured on confgiured any files located under the root directory.
+0-C2-38652: No NFS volumes are mounted without the nodev parameter and the /etc/fstab file does not contain any entries missing the nodev option.
+0-C2-38654: No NFS volumes are mounted without the nosuid parameter and the /etc/fstab file does not contain any entries missing the nosuid option.
+0-C2-38663: No package file permissions differs from what is expected by the RPM database.
+0-C2-38664: No package file ownership differs from what is expected by the RPM database.
+0-C2-38665: No package file group-ownership differs from what is expected by the RPM database.
+0-C2-38671: The sendmail package was not found on the system.
+0-C2-38674: X-Windows is needed for this system. The system runlevel is set to '5'.
+0-C2-38679: Manual IP Address configuration is not required for this system.
+0-C2-38680: The 'action_mail_acct' value in "auditd" service configuration file properly set to 'root'.
+0-C2-38682: The "bluetooth" and "net-pf-31" values ware properly found in "/etc/modprobe.d" files.
+0-C3-38447: Hashes for installed software packages match what is expected in the RPM package management system.
+0-C3-38452: Package files and directory permissions match what is expected in the RPM package management system.
+0-C3-38454: Package files and directory ownership match what is expected in the RPM package management system.
+0-C3-38460: The 'all_squash' value was not found in /etc/exports.
+0-C3-38473: The "/home" directory is properly configured as its own partition or logical volume.
+0-C3-38478: rhnsd service is not installed.
+0-C3-38480: The value '7' is specified for the PASS_WARN_AGE value in "/etc/login.defs".
+0-C3-38487: Signature checking is enabled in all repos listed under "/etc/yum.repos.d".
+0-C3-38493: Ownership already properly set for the audit log files.
+0-C3-38494: Root login is not permitted through serial ports.
+0-C3-38516: The Stream Control Transmission Protocol (SCTP) is disabled.
+0-C3-38584: Network services do not require xinetd to be running and the service was not found.
+0-C3-38618: avahi-daemon service is not installed.
+0-C3-38624: logrotate is functioning daily as required.
+0-C3-38627: The openldap-servers package was not found on the system
+0-C3-38642: umask values are properly configured in /etc/init.d/functions
+0-C3-38644: ntpdate service is not installed.
+0-C3-38645: The 'umask' for the "/etc/login.defs" is properly set to '077'.
+0-C3-38646: oddjobd is not running and chkconfig is disabled.
+0-C3-38648: qpidd service is not installed.
+0-C3-38650: rdisc is not running and chkconfig is disabled.
+0-C3-38657: No SMB volumes are mounted without the noexec parameter and the /etc/fstab file does not contain any entries missing the noexec option.
+0-C3-38669: postfix is running and chkconfig is turned on.
+0-C3-38672: netconsole is not running and chkconfig is disabled.
+0-C3-38676: Network services do not require xorg-x11-server-common to be running and the service was not found.
+0-C3-38681: All GIDs mentiond in "/etc/group" were found in "/etc/passwd".
+0-C3-38683: All GIDs mentiondin "/etc/group" were found in "/etc/passwd".
+0-C3-38687: The system does not provide communication over untrusted networks.
+0-C3-38697: The 'sticky bit' was not found missing from any file located under the / directory.
+0-C3-38699: All world-writeable directories appear to be owned by a system account.
+0-C3-38702: The vsftpd package is not installed, so the files mentioned in STIG fix text are not available.
